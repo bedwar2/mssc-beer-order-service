@@ -2,16 +2,14 @@ package guru.springframework.msscbeerorderservice.sm;
 
 import guru.springframework.msscbeerorderservice.domain.BeerOrderEventEnum;
 import guru.springframework.msscbeerorderservice.domain.BeerOrderStatusEnum;
-import guru.springframework.msscbeerorderservice.sm.actions.AllocateOrderAction;
-import guru.springframework.msscbeerorderservice.sm.actions.AllocateOrderFailedAction;
-import guru.springframework.msscbeerorderservice.sm.actions.ValidateOrderRequestAction;
-import guru.springframework.msscbeerorderservice.sm.actions.ValidationFailureAction;
+import guru.springframework.msscbeerorderservice.sm.actions.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
+import sfg.brewery.model.events.DeallocateOrderRequest;
 
 import java.util.EnumSet;
 
@@ -24,6 +22,7 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
     private final AllocateOrderAction allocateOrderAction;
     private final ValidationFailureAction validationFailureAction;
     private final AllocateOrderFailedAction allocateOrderFailedAction;
+    private final DeallocateOrderAction deallocateOrderAction;
 
     //Configures all of the possible states
     @Override
@@ -35,7 +34,8 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
                 .end(BeerOrderStatusEnum.DELIVERY_EXCEPTION)
                 .end(BeerOrderStatusEnum.VALIDATION_EXCEPTION)
                 .end(BeerOrderStatusEnum.ALLOCATION_EXCEPTION)
-                .end(BeerOrderStatusEnum.PICKED_UP);
+                .end(BeerOrderStatusEnum.PICKED_UP)
+                .end(BeerOrderStatusEnum.CANCELLED);
     }
 
     @Override
@@ -62,6 +62,18 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
                 .event(BeerOrderEventEnum.ALLOCATION_NO_INVENTORY)
                 .and()
                 .withExternal().source(BeerOrderStatusEnum.ALLOCATED).target(BeerOrderStatusEnum.PICKED_UP)
-                .event(BeerOrderEventEnum.BEERORDER_PICKED_UP);
+                .event(BeerOrderEventEnum.BEERORDER_PICKED_UP)
+                .and()
+                .withExternal().source(BeerOrderStatusEnum.VALIDATION_PENDING).target(BeerOrderStatusEnum.CANCELLED)
+                .event(BeerOrderEventEnum.CANCEL_ORDER)
+                .and()
+                .withExternal().source(BeerOrderStatusEnum.VALIDATED).target(BeerOrderStatusEnum.CANCELLED)
+                .event(BeerOrderEventEnum.CANCEL_ORDER)
+                .and()
+                .withExternal().source(BeerOrderStatusEnum.ALLOCATION_PENDING).target(BeerOrderStatusEnum.CANCELLED)
+                .event(BeerOrderEventEnum.CANCEL_ORDER)
+                .and()
+                .withExternal().source(BeerOrderStatusEnum.ALLOCATED).target(BeerOrderStatusEnum.CANCELLED)
+                .event(BeerOrderEventEnum.CANCEL_ORDER).action(deallocateOrderAction);
     }
 }
