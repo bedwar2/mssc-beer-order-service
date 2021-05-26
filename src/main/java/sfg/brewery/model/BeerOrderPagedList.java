@@ -1,4 +1,4 @@
-package guru.springframework.msscbeerorderservice.web.model;
+package sfg.brewery.model;
 
 
 import org.springframework.data.domain.PageImpl;

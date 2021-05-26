@@ -2,7 +2,7 @@ package guru.springframework.msscbeerorderservice.web.mappers;
 
 
 import guru.springframework.msscbeerorderservice.domain.BeerOrderLine;
-import guru.springframework.msscbeerorderservice.web.model.BeerOrderLineDto;
+import sfg.brewery.model.BeerOrderLineDto;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 

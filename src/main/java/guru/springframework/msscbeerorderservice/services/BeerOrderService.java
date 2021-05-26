@@ -1,8 +1,8 @@
 package guru.springframework.msscbeerorderservice.services;
 
 
-import guru.springframework.msscbeerorderservice.web.model.BeerOrderDto;
-import guru.springframework.msscbeerorderservice.web.model.BeerOrderPagedList;
+import sfg.brewery.model.BeerOrderDto;
+import sfg.brewery.model.BeerOrderPagedList;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;

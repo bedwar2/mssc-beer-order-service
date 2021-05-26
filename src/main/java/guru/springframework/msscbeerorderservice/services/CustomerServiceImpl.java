@@ -2,7 +2,7 @@ package guru.springframework.msscbeerorderservice.services;
 
 import guru.springframework.msscbeerorderservice.repositories.CustomerRepository;
 import guru.springframework.msscbeerorderservice.web.mappers.CustomerMapper;
-import guru.springframework.msscbeerorderservice.web.model.CustomerDto;
+import sfg.brewery.model.CustomerDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package guru.springframework.msscbeerorderservice.services;
 
-import guru.springframework.msscbeerorderservice.web.model.CustomerDto;
+import sfg.brewery.model.CustomerDto;
 
 import java.util.List;
 

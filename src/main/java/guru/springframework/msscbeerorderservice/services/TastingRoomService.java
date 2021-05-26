@@ -4,8 +4,8 @@ import guru.springframework.msscbeerorderservice.bootstrap.BeerOrderBootStrap;
 import guru.springframework.msscbeerorderservice.domain.Customer;
 import guru.springframework.msscbeerorderservice.repositories.BeerOrderRepository;
 import guru.springframework.msscbeerorderservice.repositories.CustomerRepository;
-import guru.springframework.msscbeerorderservice.web.model.BeerOrderDto;
-import guru.springframework.msscbeerorderservice.web.model.BeerOrderLineDto;
+import sfg.brewery.model.BeerOrderDto;
+import sfg.brewery.model.BeerOrderLineDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class TastingRoomService {
     }
 
     @Transactional
-    @Scheduled(fixedRate = 2000) //run every 2 seconds
+    //@Scheduled(fixedRate = 2000) //run every 2 seconds
     public void placeTastingRoomOrder(){
 
         List<Customer> customerList = customerRepository.findAllByCustomerNameLike(BeerOrderBootStrap.TASTING_ROOM);

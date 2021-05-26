@@ -1,7 +1,7 @@
 package guru.springframework.msscbeerorderservice.web.controllers;
 
 import guru.springframework.msscbeerorderservice.services.CustomerService;
-import guru.springframework.msscbeerorderservice.web.model.CustomerDto;
+import sfg.brewery.model.CustomerDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
